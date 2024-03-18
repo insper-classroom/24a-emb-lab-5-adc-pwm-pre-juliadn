@@ -29,20 +29,18 @@ void process_task(void *p) {
     while (true) {
         if (xQueueReceive(xQueueData, &data, 100)) {
             // implementar filtro aqui!
-
-            //Para todos os dados que chegam na fila xQueueData, aplicar uma média móvel de tamanho 5 e imprimir o dado filtrado na UART. 
-
-            int sum = 0;
-            int count = 0;
-            int data_aux = data;
-            while (count < 5) {
-                sum += data_aux;
-                count++;
-                if (xQueueReceive(xQueueData, &data_aux, 0)) {
-                    data = data_aux;
-                }
+ 
+            static int data_buffer[5] = {0, 0, 0, 0, 0};
+            static int data_index = 0;
+            data_buffer[data_index] = data;
+            data_index = (data_index + 1) % 5;
+            int filtered_data = 0;
+            for (int i = 0; i < 5; i++) {
+                filtered_data += data_buffer[i];
             }
-            printf("Data: %d\n", sum / 5);
+            filtered_data /= 5;
+            printf("Data: %d\n", filtered_data);
+            
 
 
 
