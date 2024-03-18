@@ -22,7 +22,7 @@ void led_task(void *p) {
     }
 }
 
-void led_task(void *p){
+void led_task2(void *p){
     gpio_set_function(PWM_1_PIN, GPIO_FUNC_PWM);
     uint slice_num = pwm_gpio_to_slice_num(PWM_1_PIN);
     pwm_set_clkdiv(slice_num, 125);
@@ -41,7 +41,7 @@ int main() {
     printf("Start RTOS \n");
 
     xTaskCreate(led_task, "LED_Task 1", 256, NULL, 1, NULL);
-    xTaskCreate(led_task, "LED_Task 2", 256, NULL, 1, NULL);
+    xTaskCreate(led_task2, "LED_Task 2", 256, NULL, 1, NULL);
 
     vTaskStartScheduler();
 
