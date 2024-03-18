@@ -39,7 +39,7 @@ void process_task(void *p) {
                 filtered_data += data_buffer[i];
             }
             filtered_data /= 5;
-            printf(filtered_data);
+            printf("%d\n", filtered_data);
             
 
 
